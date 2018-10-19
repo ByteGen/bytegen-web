@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5p %-15t [%c{1}:%L][%X{trace_id}] - %m%n%throwable{5}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <logger name="org.eclipse.jetty" level="${log.common.level:-DEBUG}"/>
+    <logger name="io.netty" level="${log.common.level:-DEBUG}"/>
+    <logger name="org.apache.http" level="${log.common.level:-DEBUG}"/>
+    <logger name="org.apache.kafka" level="${log.common.level:-DEBUG}"/>
+    <logger name="org.apache.commons" level="${log.common.level:-DEBUG}"/>
+    <logger name="org.springframework" level="${log.common.level:-DEBUG}"/>
+    <logger name="com.zaxxer.hikari" level="${log.common.level:-DEBUG}"/>
+    <logger name="com.bytegen.common.metrics.MetricsPushTask" level="${log.common.level:-DEBUG}"/>
+
+    <root level="${log.root.level:-DEBUG}">
+         <appender-ref ref="stdout"/>
+    </root>
+
+</configuration>
