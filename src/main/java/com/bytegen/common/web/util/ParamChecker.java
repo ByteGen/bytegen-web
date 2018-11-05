@@ -1,7 +1,7 @@
 package com.bytegen.common.web.util;
 
-import com.bytegen.common.web.StatusCode;
-import com.bytegen.common.web.StatusCodes;
+import com.bytegen.common.web.ResultStatus;
+import com.bytegen.common.web.RSEnum;
 import com.bytegen.common.web.basic.BasicWebException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,37 +21,37 @@ public class ParamChecker {
      * @throws BasicWebException
      */
     public static void assertThat(boolean assertion, String errMsg) throws BasicWebException {
-        assertThat(assertion, StatusCodes.RC_INVALID_PARAM, errMsg);
+        assertThat(assertion, RSEnum.RS_INVALID_PARAM, errMsg);
     }
 
     /**
      * @param assertion  if true will go through, if false will return error with input
-     *                   statusCode
-     * @param statusCode
+     *                   resultStatus
+     * @param resultStatus
      * @param errMsg
      * @throws BasicWebException
      */
-    public static void assertThat(boolean assertion, StatusCode statusCode, String errMsg) throws BasicWebException {
+    public static void assertThat(boolean assertion, ResultStatus resultStatus, String errMsg) throws BasicWebException {
         if (!assertion) {
-            throw new BasicWebException(statusCode, errMsg);
+            throw new BasicWebException(resultStatus, errMsg);
         }
     }
 
 
     /**
      * @param targetParam if not null then go through (or string is not empty), else
-     *                    return error with input statusCode
-     * @param statusCode
+     *                    return error with input resultStatus
+     * @param resultStatus
      * @param errMsg
      * @throws BasicWebException
      */
-    public static void notNullOrBlank(Object targetParam, StatusCode statusCode, String errMsg) throws BasicWebException {
+    public static void notNullOrBlank(Object targetParam, ResultStatus resultStatus, String errMsg) throws BasicWebException {
         if (targetParam == null) {
-            throw new BasicWebException(statusCode, errMsg);
+            throw new BasicWebException(resultStatus, errMsg);
         }
 
         if (targetParam instanceof String && StringUtils.isBlank((String) targetParam)) {
-            throw new BasicWebException(statusCode, errMsg);
+            throw new BasicWebException(resultStatus, errMsg);
         }
     }
 
@@ -63,11 +63,11 @@ public class ParamChecker {
      */
     public static void notNullOrBlank(Object targetParam, String errMsg) throws BasicWebException {
         if (targetParam == null) {
-            throw new BasicWebException(StatusCodes.RC_INVALID_PARAM, errMsg);
+            throw new BasicWebException(RSEnum.RS_INVALID_PARAM, errMsg);
         }
 
         if (targetParam instanceof String && StringUtils.isBlank((String) targetParam)) {
-            throw new BasicWebException(StatusCodes.RC_INVALID_PARAM, errMsg);
+            throw new BasicWebException(RSEnum.RS_INVALID_PARAM, errMsg);
         }
     }
 
@@ -79,7 +79,7 @@ public class ParamChecker {
      */
     public static void assertEitherOne(Object tgtParam1, Object tgtParam2, String errMsg) throws BasicWebException {
         if (tgtParam1 == null && tgtParam2 == null) {
-            throw new BasicWebException(StatusCodes.RC_INVALID_PARAM, errMsg);
+            throw new BasicWebException(RSEnum.RS_INVALID_PARAM, errMsg);
         }
     }
 
@@ -92,12 +92,12 @@ public class ParamChecker {
      */
     public static void assertIn(String targetParam, String fieldName, List<String> range) throws BasicWebException {
         if (targetParam == null) {
-            throw new BasicWebException(StatusCodes.RC_INVALID_PARAM,
+            throw new BasicWebException(RSEnum.RS_INVALID_PARAM,
                     String.format("[%s] should be one of %s", fieldName, range));
         }
 
         if (!range.contains(targetParam)) {
-            throw new BasicWebException(StatusCodes.RC_INVALID_PARAM,
+            throw new BasicWebException(RSEnum.RS_INVALID_PARAM,
                     String.format("[%s] should be one of %s", fieldName, range));
         }
     }

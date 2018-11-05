@@ -34,7 +34,7 @@ public class TestController {
     public ResponseEntity fail(@RequestParam("para") String para,
                                @RequestParam(value = "para_name", required = false) String paraName) throws Exception {
 
-        return ResponseUtil.toBaseResponse(StatusCodes.RC_FAILURE.getResultCode());
+        return ResponseUtil.toBaseResponse(RSEnum.RS_FAILURE.getCode());
     }
 
     @PostMapping(value = "test/1/post")

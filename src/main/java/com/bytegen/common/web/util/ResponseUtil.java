@@ -1,7 +1,7 @@
 package com.bytegen.common.web.util;
 
 import com.bytegen.common.web.Constant;
-import com.bytegen.common.web.StatusCodes;
+import com.bytegen.common.web.RSEnum;
 import com.bytegen.common.web.basic.BaseResponse;
 import com.bytegen.common.web.basic.RestfulResponse;
 import org.slf4j.MDC;
@@ -55,7 +55,7 @@ public class ResponseUtil {
     }
 
     public static <T> ResponseEntity toSuccessResponse(String traceId, T data) {
-        RestfulResponse<T> response = new RestfulResponse<>(traceId, StatusCodes.RC_SUCCESS.getResultCode(), data);
+        RestfulResponse<T> response = new RestfulResponse<>(traceId, RSEnum.RS_SUCCESS.getCode(), data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

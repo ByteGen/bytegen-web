@@ -1,7 +1,7 @@
 package com.bytegen.common.web.filter;
 
 import com.bytegen.common.web.Constant;
-import com.bytegen.common.web.StatusCodes;
+import com.bytegen.common.web.RSEnum;
 import com.bytegen.common.web.basic.BaseResponse;
 import com.bytegen.common.web.util.NWebUtil;
 import com.bytegen.common.web.util.ResponseUtil;
@@ -45,7 +45,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
             if (StringUtils.isBlank(accountId) && anno.filterRequest()) {
                 ResponseUtil.outputBaseResponse(response,
-                        new BaseResponse(traceId, StatusCodes.RC_AUTH_FAILED.getResultCode(), "Auth Failed"));
+                        new BaseResponse(traceId, RSEnum.RS_AUTH_FAILED.getCode(), "Auth Failed"));
                 return false;
             }
             request.setAttribute(Constant.CONTEXT_PROPERTY_ACCOUNT_ID, accountId);

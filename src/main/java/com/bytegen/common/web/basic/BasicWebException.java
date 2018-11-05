@@ -1,6 +1,6 @@
 package com.bytegen.common.web.basic;
 
-import com.bytegen.common.web.StatusCode;
+import com.bytegen.common.web.ResultStatus;
 import com.bytegen.common.web.util.ParamChecker;
 
 /**
@@ -12,55 +12,55 @@ public class BasicWebException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    private StatusCode statusCode;
+    private ResultStatus resultStatus;
     private String debugMsg;
     private Object data;
 
-    public BasicWebException(StatusCode statusCode) {
+    public BasicWebException(ResultStatus resultStatus) {
         super();
-        ParamChecker.assertThat(null != statusCode, "statusCode is null");
+        ParamChecker.assertThat(null != resultStatus, "resultStatus is null");
 
-        this.statusCode = statusCode;
+        this.resultStatus = resultStatus;
     }
 
-    public BasicWebException(StatusCode statusCode, String debugMsg) {
+    public BasicWebException(ResultStatus resultStatus, String debugMsg) {
         super(debugMsg);
-        ParamChecker.assertThat(null != statusCode, "statusCode is null");
+        ParamChecker.assertThat(null != resultStatus, "resultStatus is null");
 
-        this.statusCode = statusCode;
+        this.resultStatus = resultStatus;
         this.debugMsg = debugMsg;
     }
 
-    public BasicWebException(StatusCode statusCode, String debugMsg, Object data) {
+    public BasicWebException(ResultStatus resultStatus, String debugMsg, Object data) {
         super(debugMsg);
-        ParamChecker.assertThat(null != statusCode, "statusCode is null");
+        ParamChecker.assertThat(null != resultStatus, "resultStatus is null");
 
-        this.statusCode = statusCode;
+        this.resultStatus = resultStatus;
         this.debugMsg = debugMsg;
         this.data = data;
     }
 
 
-    public BasicWebException(StatusCode statusCode, Throwable e) {
-        this(statusCode, null, e);
+    public BasicWebException(ResultStatus resultStatus, Throwable e) {
+        this(resultStatus, null, e);
     }
 
-    public BasicWebException(StatusCode statusCode, String debugMsg, Throwable e) {
-        this(statusCode, debugMsg, null, e);
+    public BasicWebException(ResultStatus resultStatus, String debugMsg, Throwable e) {
+        this(resultStatus, debugMsg, null, e);
     }
 
-    public BasicWebException(StatusCode statusCode, String debugMsg, Object data, Throwable e) {
+    public BasicWebException(ResultStatus resultStatus, String debugMsg, Object data, Throwable e) {
         super(debugMsg, e);
-        ParamChecker.assertThat(null != statusCode, "statusCode is null");
+        ParamChecker.assertThat(null != resultStatus, "resultStatus is null");
 
-        this.statusCode = statusCode;
+        this.resultStatus = resultStatus;
         this.debugMsg = debugMsg;
         this.data = data;
     }
 
 
-    public StatusCode getStatusCode() {
-        return statusCode;
+    public ResultStatus getResultStatus() {
+        return resultStatus;
     }
 
     public String getDebugMsg() {

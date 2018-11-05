@@ -35,29 +35,10 @@ public class ServletWrapperFilter extends OncePerRequestFilter {
 
     @Value("${log.response.maxLength:10240}")
     private int maxLength;
-    @Value("${log.response.maskBetwixt.uri:}")
-    private String shortenResponseLogUris;
-    @Value("${log.request.maskHeader.key:}")
-    private String maskRequestLogHeaderKeys;
-
-    private List<String> logResponseMaskedUris = null;
-    private List<String> logRequestHeaderMaskedKeys = null;
-
-    @PostConstruct
-    private void initUriList() {
-        Splitter splitter = Splitter.on(",").omitEmptyStrings().trimResults();
-        if (StringUtils.isNotBlank(shortenResponseLogUris)) {
-            logResponseMaskedUris = splitter.splitToList(shortenResponseLogUris.toLowerCase());
-        } else {
-            logResponseMaskedUris = Collections.emptyList();
-        }
-
-        if (StringUtils.isNotBlank(maskRequestLogHeaderKeys)) {
-            logRequestHeaderMaskedKeys = splitter.splitToList(maskRequestLogHeaderKeys.toLowerCase());
-        } else {
-            logRequestHeaderMaskedKeys = Collections.emptyList();
-        }
-    }
+    @Value("#{'${log.response.maskData.uri:}'.split(',')}")
+    private List<String> logResponseMaskedUris;
+    @Value("#{'${log.request.maskHeader.key:}'.split(',')}")
+    private List<String> logRequestHeaderMaskedKeys;
 
     private static final Logger logger = LoggerFactory.getLogger(ServletWrapperFilter.class);
     private static final String _REQUEST_TIMESTAMP = "_request_timestamp_72ee57f3e57e43af9128a4dce2346ff1";

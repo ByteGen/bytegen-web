@@ -1,7 +1,7 @@
 package com.bytegen.common.web.filter;
 
 import com.bytegen.common.web.Constant;
-import com.bytegen.common.web.StatusCodes;
+import com.bytegen.common.web.RSEnum;
 import com.bytegen.common.web.basic.BasicWebException;
 import com.bytegen.common.web.util.NWebUtil;
 import org.aspectj.lang.JoinPoint;
@@ -36,7 +36,7 @@ public class MockApiAspect {
             HttpServletRequest request = NWebUtil.getCurrentHttpRequest();
 
             LOGGER.warn("Received mock api request unexpected: {}", request.getRequestURI());
-            throw new BasicWebException(StatusCodes.RC_REQUEST_FORBIDDEN, "access mock service is not allowed");
+            throw new BasicWebException(RSEnum.RS_REQUEST_FORBIDDEN, "access mock service is not allowed");
         }
     }
 

@@ -1,7 +1,7 @@
 package com.bytegen.common.web.filter;
 
 import com.bytegen.common.web.Constant;
-import com.bytegen.common.web.StatusCodes;
+import com.bytegen.common.web.RSEnum;
 import com.bytegen.common.web.basic.BaseResponse;
 import com.bytegen.common.web.util.NWebUtil;
 import com.bytegen.common.web.util.ResponseUtil;
@@ -51,7 +51,7 @@ public class GeneralInterceptor implements HandlerInterceptor {
 
 //        String nonce = request.getParameter("nonce");
 //        if (StringUtils.isEmpty(nonce) || nonce.length() > 32) {
-//            ResponseUtil.outputBaseResponse(response, traceId, Constant.RC_INVALID_PARAM, "invalid nonce");
+//            ResponseUtil.outputBaseResponse(response, traceId, Constant.RS_INVALID_PARAM, "invalid nonce");
 //            return false;
 //        }
             //check duplicate nonce
@@ -64,7 +64,7 @@ public class GeneralInterceptor implements HandlerInterceptor {
 //            reply = "OK";
 //        }
 //        if (StringUtils.isBlank(reply)) {
-//            ResponseUtil.outputBaseResponse(response, traceId, Constant.RC_INVALID_PARAM, "invalid nonce");
+//            ResponseUtil.outputBaseResponse(response, traceId, Constant.RS_INVALID_PARAM, "invalid nonce");
 //            return false;
 //        }
 
@@ -72,7 +72,7 @@ public class GeneralInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             logger.error("General interceptor error, exception:{}", e.getMessage(), e);
             ResponseUtil.outputBaseResponse(response,
-                    new BaseResponse(traceId, StatusCodes.RC_INTERNAL_ERROR.getResultCode(), "check sign exception"));
+                    new BaseResponse(traceId, RSEnum.RS_INTERNAL_ERROR.getCode(), "check sign exception"));
             return false;
         }
     }
@@ -98,25 +98,25 @@ public class GeneralInterceptor implements HandlerInterceptor {
         String appId = request.getParameter(Constant.PARAMETER_APP_ID);
         if (StringUtils.isEmpty(appId)) {
             ResponseUtil.outputBaseResponse(response,
-                    new BaseResponse(traceId, StatusCodes.RC_INVALID_PARAM.getResultCode(), "missing app_id"));
+                    new BaseResponse(traceId, RSEnum.RS_INVALID_PARAM.getCode(), "missing app_id"));
             return false;
         }
 
         String timestamp = request.getParameter(Constant.PARAMETER_TIMESTAMP);
         if (StringUtils.isBlank(timestamp)) {
             ResponseUtil.outputBaseResponse(response,
-                    new BaseResponse(traceId, StatusCodes.RC_INVALID_PARAM.getResultCode(), "missing timestamp"));
+                    new BaseResponse(traceId, RSEnum.RS_INVALID_PARAM.getCode(), "missing timestamp"));
             return false;
         }
 
         if (!isValidTimestamp(timestamp, timestampTolerance)) {
             ResponseUtil.outputBaseResponse(response,
-                    new BaseResponse(traceId, StatusCodes.RC_INVALID_PARAM.getResultCode(), "timestamp over proof"));
+                    new BaseResponse(traceId, RSEnum.RS_INVALID_PARAM.getCode(), "timestamp over proof"));
             return false;
         }
         if (!Boolean.parseBoolean(request.getHeader(Constant.GATEWAY_SIGN_VERIFIED))) {
             ResponseUtil.outputBaseResponse(response,
-                    new BaseResponse(traceId, StatusCodes.RC_SIGN_FAILED.getResultCode(), "invalid sign"));
+                    new BaseResponse(traceId, RSEnum.RS_SIGN_FAILED.getCode(), "invalid sign"));
             return false;
         }
         return true;

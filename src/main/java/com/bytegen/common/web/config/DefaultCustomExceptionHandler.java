@@ -1,6 +1,6 @@
 package com.bytegen.common.web.config;
 
-import com.bytegen.common.web.StatusCodes;
+import com.bytegen.common.web.RSEnum;
 import com.bytegen.common.web.basic.BasicWebException;
 import com.bytegen.common.web.basic.RestfulResponse;
 import com.bytegen.common.web.util.NWebUtil;
@@ -39,8 +39,8 @@ public class DefaultCustomExceptionHandler {
         LOGGER.error("Method not support with " + request.getRequestURL(), e);
 
         String traceId = NWebUtil.getTraceIdFromRequest(request);
-        return ResponseUtil.toBaseResponse(traceId, StatusCodes.RC_METHOD_NOT_ALLOWED.getResultCode(),
-                getMessage(request, StatusCodes.RC_METHOD_NOT_ALLOWED.getMessageCode()),
+        return ResponseUtil.toBaseResponse(traceId, RSEnum.RS_METHOD_NOT_ALLOWED.getCode(),
+                getMessage(request, RSEnum.RS_METHOD_NOT_ALLOWED.getMessage()),
                 e.getMessage());
     }
 
@@ -50,8 +50,8 @@ public class DefaultCustomExceptionHandler {
         LOGGER.warn("Content not readable in: " + request.getRequestURL(), e);
 
         String traceId = NWebUtil.getTraceIdFromRequest(request);
-        return ResponseUtil.toBaseResponse(traceId, StatusCodes.RC_BADE_REQUEST.getResultCode(),
-                getMessage(request, StatusCodes.RC_BADE_REQUEST.getMessageCode()),
+        return ResponseUtil.toBaseResponse(traceId, RSEnum.RS_BADE_REQUEST.getCode(),
+                getMessage(request, RSEnum.RS_BADE_REQUEST.getMessage()),
                 "HTTP content format not correct");
     }
 
@@ -61,8 +61,8 @@ public class DefaultCustomExceptionHandler {
         LOGGER.warn("Parameter miss in: " + request.getRequestURL(), e);
 
         String traceId = NWebUtil.getTraceIdFromRequest(request);
-        return ResponseUtil.toBaseResponse(traceId, StatusCodes.RC_MISSING_REQUIRED_PARAM.getResultCode(),
-                getMessage(request, StatusCodes.RC_MISSING_REQUIRED_PARAM.getMessageCode()),
+        return ResponseUtil.toBaseResponse(traceId, RSEnum.RS_MISSING_REQUIRED_PARAM.getCode(),
+                getMessage(request, RSEnum.RS_MISSING_REQUIRED_PARAM.getMessage()),
                 String.format("Missing required params [%s]", e.getParameterName()));
     }
 
@@ -72,8 +72,8 @@ public class DefaultCustomExceptionHandler {
         LOGGER.warn("Parameter type mismatch in: " + request.getRequestURL(), e);
 
         String traceId = NWebUtil.getTraceIdFromRequest(request);
-        return ResponseUtil.toBaseResponse(traceId, StatusCodes.RC_TYPE_MISMATCH.getResultCode(),
-                getMessage(request, StatusCodes.RC_TYPE_MISMATCH.getMessageCode()),
+        return ResponseUtil.toBaseResponse(traceId, RSEnum.RS_TYPE_MISMATCH.getCode(),
+                getMessage(request, RSEnum.RS_TYPE_MISMATCH.getMessage()),
                 String.format("Type mismatching param [%s] ", e.getName()));
     }
 
@@ -83,8 +83,8 @@ public class DefaultCustomExceptionHandler {
         LOGGER.warn("Argument invalid with: " + request.getRequestURL(), e);
 
         String traceId = NWebUtil.getTraceIdFromRequest(request);
-        return ResponseUtil.toBaseResponse(traceId, StatusCodes.RC_INVALID_PARAM.getResultCode(),
-                getMessage(request, StatusCodes.RC_INVALID_PARAM.getMessageCode()),
+        return ResponseUtil.toBaseResponse(traceId, RSEnum.RS_INVALID_PARAM.getCode(),
+                getMessage(request, RSEnum.RS_INVALID_PARAM.getMessage()),
                 e.getBindingResult().getFieldError().getDefaultMessage());
     }
 
@@ -94,8 +94,8 @@ public class DefaultCustomExceptionHandler {
         LOGGER.warn("Argument illegal with " + request.getRequestURL(), e);
 
         String traceId = NWebUtil.getTraceIdFromRequest(request);
-        return ResponseUtil.toBaseResponse(traceId, StatusCodes.RC_INVALID_PARAM.getResultCode(),
-                getMessage(request, StatusCodes.RC_INVALID_PARAM.getMessageCode()),
+        return ResponseUtil.toBaseResponse(traceId, RSEnum.RS_INVALID_PARAM.getCode(),
+                getMessage(request, RSEnum.RS_INVALID_PARAM.getMessage()),
                 e.getMessage());
     }
 
@@ -106,8 +106,8 @@ public class DefaultCustomExceptionHandler {
         return ResponseUtil.generateResponse(
                 new RestfulResponse<>(
                         traceId,
-                        e.getStatusCode().getResultCode(),
-                        getMessage(request, e.getStatusCode().getMessageCode()),
+                        e.getResultStatus().getCode(),
+                        getMessage(request, e.getResultStatus().getMessage()),
                         e.getDebugMsg(),
                         e.getData()
                 )
@@ -121,8 +121,8 @@ public class DefaultCustomExceptionHandler {
 
         String traceId = NWebUtil.getTraceIdFromRequest(request);
         LOGGER.error(String.format("Request [%s] error!", traceId), e);
-        return ResponseUtil.toBaseResponse(traceId, StatusCodes.RC_INTERNAL_ERROR.getResultCode(),
-                getMessage(request, StatusCodes.RC_INTERNAL_ERROR.getMessageCode()),
+        return ResponseUtil.toBaseResponse(traceId, RSEnum.RS_INTERNAL_ERROR.getCode(),
+                getMessage(request, RSEnum.RS_INTERNAL_ERROR.getMessage()),
                 e.getMessage());
     }
 
